@@ -7,6 +7,21 @@
 
 const STORAGE_KEY = "todo-app:tasks:v1";
 
+const QUOTES = [
+  "千里の道も一歩から。",
+  "継続は力なり。",
+  "失敗は成功のもと。",
+  "思い立ったが吉日。",
+  "七転び八起き。",
+  "石の上にも三年。",
+  "急がば回れ。",
+  "明日は明日の風が吹く。",
+  "一期一会。",
+  "笑う門には福来たる。",
+];
+document.getElementById("daily-quote").textContent =
+  "～ " + QUOTES[Math.floor(Math.random() * QUOTES.length)] + " ～";
+
 /** 優先度の表示順（高いほど上に並べる） */
 const PRIORITY_RANK = { high: 0, mid: 1, low: 2 };
 const PRIORITY_LABEL = { high: "高", mid: "中", low: "低" };
