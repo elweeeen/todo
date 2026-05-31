@@ -33,3 +33,7 @@
 
 ブラウザごとの localStorage（キー: `todo-app:tasks:v1`）に保存されます。
 別のブラウザや別の端末とは共有されません。
+
+## 動作環境
+
+最新版の Google Chrome / Microsoft Edge / Firefox で動作します。
