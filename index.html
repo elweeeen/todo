@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TODO アプリ</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>📝 TODO リスト</h1>
+      <p class="subtitle">やることを整理しましょう</p>
+    </header>
+
+    <!-- 入力フォーム -->
+    <form id="new-task-form" class="task-form" autocomplete="off">
+      <input
+        type="text"
+        id="task-text"
+        class="task-input"
+        placeholder="新しいタスクを入力…"
+        maxlength="200"
+        required
+      />
+      <select id="task-priority" class="task-priority" title="優先度">
+        <option value="high">優先度：高</option>
+        <option value="mid" selected>優先度：中</option>
+        <option value="low">優先度：低</option>
+      </select>
+      <input type="date" id="task-due" class="task-due" title="期限（任意）" />
+      <button type="submit" class="add-btn">追加</button>
+    </form>
+
+    <!-- フィルタ -->
+    <div class="filters" role="tablist">
+      <button class="filter-btn is-active" data-filter="all">すべて</button>
+      <button class="filter-btn" data-filter="active">未完了</button>
+      <button class="filter-btn" data-filter="completed">完了</button>
+    </div>
+
+    <!-- タスク一覧 -->
+    <ul id="task-list" class="task-list"></ul>
+    <p id="empty-state" class="empty-state" hidden>タスクはありません。</p>
+
+    <!-- フッター -->
+    <footer class="app-footer">
+      <span id="active-count" class="active-count">残り 0 件</span>
+      <button id="clear-completed" class="clear-btn">完了済みを削除</button>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

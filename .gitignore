@@ -1,0 +1,9 @@
+# OS 生成ファイル
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# エディタ
+.vscode/
+.idea/
+*.swp
