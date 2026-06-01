@@ -66,7 +66,8 @@ body {
 }
 .task-input:focus { border-color: var(--accent); }
 .task-priority,
-.task-due {
+.task-due,
+.task-recur {
   flex: 1 1 auto;
   padding: 10px 12px;
   font-size: 0.9rem;
@@ -215,7 +216,34 @@ body {
 }
 .clear-btn:hover { color: var(--danger); text-decoration: underline; }
 
+.recur-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  color: var(--accent);
+  margin-top: 2px;
+}
+
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: #1e293b;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+  z-index: 100;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 @media (max-width: 480px) {
-  .task-priority, .task-due { flex: 1 1 100%; }
+  .task-priority, .task-due, .task-recur { flex: 1 1 100%; }
   .add-btn { flex: 1 1 100%; }
 }

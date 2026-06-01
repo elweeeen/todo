@@ -30,6 +30,12 @@
         <option value="low">優先度：低</option>
       </select>
       <input type="date" id="task-due" class="task-due" title="期限（任意）" />
+      <select id="task-recur" class="task-recur" title="繰り返し">
+        <option value="">繰り返しなし</option>
+        <option value="daily">毎日</option>
+        <option value="weekly">毎週</option>
+        <option value="monthly">毎月</option>
+      </select>
       <button type="submit" class="add-btn">追加</button>
     </form>
 
@@ -51,6 +57,7 @@
     </footer>
   </div>
 
+  <div id="toast" class="toast" aria-live="polite"></div>
   <script src="app.js"></script>
 </body>
 </html>

@@ -35,6 +35,7 @@ const form          = document.getElementById("new-task-form");
 const textInput     = document.getElementById("task-text");
 const priorityInput = document.getElementById("task-priority");
 const dueInput      = document.getElementById("task-due");
+const recurInput    = document.getElementById("task-recur");
 const listEl        = document.getElementById("task-list");
 const emptyEl       = document.getElementById("empty-state");
 const countEl       = document.getElementById("active-count");
@@ -67,21 +68,54 @@ function todayStr() {
 }
 
 // ----- 操作 -----
-function addTask(text, priority, due) {
+function addTask(text, priority, due, recur) {
   tasks.push({
     id: newId(),
     text: text.trim(),
     done: false,
     priority: priority || "mid",
     due: due || "",
+    recur: recur || "",
     createdAt: Date.now(),
   });
   save();
   render();
 }
+function advanceDue(due, recur) {
+  const base = due || todayStr();
+  const d = new Date(base + "T00:00:00");
+  if (recur === "daily")   d.setDate(d.getDate() + 1);
+  if (recur === "weekly")  d.setDate(d.getDate() + 7);
+  if (recur === "monthly") d.setMonth(d.getMonth() + 1);
+  return d.toISOString().slice(0, 10);
+}
+
+let toastTimer;
+function showToast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.hidden = false;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    el.classList.remove("show");
+    el.hidden = true;
+  }, 2500);
+}
+
 function toggleTask(id) {
   const t = tasks.find((t) => t.id === id);
-  if (t) { t.done = !t.done; save(); render(); }
+  if (!t) return;
+  if (!t.done && t.recur) {
+    t.due = advanceDue(t.due, t.recur);
+    save();
+    render();
+    showToast(`🔁 次の期限：${t.due}`);
+    return;
+  }
+  t.done = !t.done;
+  save();
+  render();
 }
 function deleteTask(id) {
   tasks = tasks.filter((t) => t.id !== id);
@@ -165,6 +199,14 @@ function render() {
       body.appendChild(meta);
     }
 
+    if (t.recur) {
+      const recurBadge = document.createElement("span");
+      recurBadge.className = "recur-badge";
+      const recurLabel = { daily: "毎日", weekly: "毎週", monthly: "毎月" };
+      recurBadge.textContent = "🔁 " + recurLabel[t.recur];
+      body.appendChild(recurBadge);
+    }
+
     // 編集ボタン
     const editBtn = document.createElement("button");
     editBtn.className = "icon-btn edit";
@@ -220,10 +262,11 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
   const text = textInput.value.trim();
   if (!text) return;
-  addTask(text, priorityInput.value, dueInput.value);
+  addTask(text, priorityInput.value, dueInput.value, recurInput.value);
   textInput.value = "";
   dueInput.value = "";
   priorityInput.value = "mid";
+  recurInput.value = "";
   textInput.focus();
 });
 
